@@ -8,12 +8,13 @@ class Waveform:
     The actual duration of the waveforms is adjusted in the Moku software by changing the AWG frequency
     """
 
-    def __init__(self, channel: int, f_start: float, f_stop: float, rel_ramp_duration: float, n_points: int, phase=0.0):
+    def __init__(self, channel: int, f_start: float, f_stop: float, delay: float, rel_ramp_duration: float, n_points: int, phase=0.0):
         self.channel = channel
         self.f_start = f_start
         self.f_stop = f_stop
-        self.phase = phase
+        self.delay = delay
         self.rel_ramp_duration = rel_ramp_duration
+        self.phase = phase
         self.timepoints = np.linspace(0, 1, n_points)
         self.wave_array = self.createWaveArray()
 

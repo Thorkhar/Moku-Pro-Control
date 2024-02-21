@@ -1,35 +1,41 @@
-import numpy as np
-import matplotlib.pyplot as plt
 from Waveform import Waveform
 from Moku import Moku
 import config as cfg
 
-'''moku_morgul = Moku(
-    cfg.MOKU_MORGUL_IP,
-    cfg.SAMPLE_RATE
-)
 
-moku_morgul.closeConnection()'''
+def _findCorrespondingMoku(channel: int):
+    if 1 <= channel <= 4:
+        return cfg.MOKU_A_NAME
+    else:
+        return cfg.MOKU_B_NAME
 
-channels = []
-for ch in range(8):
-    channels.append(
-        Waveform(
-            ch,
-            cfg.F_START,
-            cfg.F_STOP,
-            cfg.REL_RAMP_DURATION,
-            cfg.N_POINTS,
-            ch * 45
+
+if __name__ == "__main__":
+    # Attempt to establish connection with Moku's
+    try:
+        devices = {
+            cfg.MOKU_A_NAME: Moku(cfg.MOKU_A_IP),  # Channels 1 to 4
+            cfg.MOKU_B_NAME: Moku(cfg.MOKU_B_IP)  # Channels 5 to 8
+        }
+    except Exception as e:
+        print(e)
+        print('Failed to connect to Moku:Pro devices. Closing program')
+        exit()
+
+    # Create waveforms for each channel based on config parameters
+    waves = [
+        Waveform(ch, cfg.F_START, cfg.F_STOP, cfg.DELAYS[ch], cfg.REL_RAMP_DURATION, cfg.N_POINTS, cfg.PHASES[ch]) for ch in range(1, 9)
+    ]
+
+    # Upload waveforms and set Moku:Pro's in the good settings
+    for wave in waves:
+        devices[_findCorrespondingMoku(wave.channel)].setupChannel(
+            wave.channel,
+            wave.wave_array
         )
-    )
 
+    # CLose connection with Moku:Pro's
+    for name, device in devices.items():
+        device.closeConnection()
 
-for ch in channels:
-    np.savetxt(
-        f'waveform_ch{str(ch.channel)}.csv',
-        ch.wave_array
-    )
-
-plt.plot(channels[0].timepoints, channels[0].wave_array)
-plt.show()
+    print('Finished setting up Moku:Pro devices')

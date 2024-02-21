@@ -1,27 +1,35 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from Waveform import Waveform
+from Moku import Moku
 import config as cfg
 
-
-wave1 = Waveform(
-    cfg.F_START,
-    cfg.F_STOP,
-    cfg.REL_RAMP_DURATION,
-    cfg.N_POINTS
+'''moku_morgul = Moku(
+    cfg.MOKU_MORGUL_IP,
+    cfg.SAMPLE_RATE
 )
 
-wave2 = Waveform(
-    cfg.F_START,
-    cfg.F_STOP,
-    cfg.REL_RAMP_DURATION,
-    cfg.N_POINTS,
-    45
-)
+moku_morgul.closeConnection()'''
 
-plt.plot(wave1.timepoints, wave1.wave_array)
-plt.plot(wave2.timepoints, wave2.wave_array)
+channels = []
+for ch in range(8):
+    channels.append(
+        Waveform(
+            ch,
+            cfg.F_START,
+            cfg.F_STOP,
+            cfg.REL_RAMP_DURATION,
+            cfg.N_POINTS,
+            ch * 45
+        )
+    )
+
+
+for ch in channels:
+    np.savetxt(
+        f'waveform_ch{str(ch.channel)}.csv',
+        ch.wave_array
+    )
+
+plt.plot(channels[0].timepoints, channels[0].wave_array)
 plt.show()
-
-np.savetxt('waveform1.csv', wave1.wave_array)
-np.savetxt('waveform2.csv', wave2.wave_array)

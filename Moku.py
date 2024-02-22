@@ -6,7 +6,7 @@ import config as cfg
 class Moku:
     def __init__(self, ip: str):
         self.ip = ip
-        self.device = ArbitraryWaveformGenerator(ip, force_connect=False)
+        self.device = ArbitraryWaveformGenerator(ip, force_connect=True)
 
     def setupChannel(self, channel: int, waveform: np.ndarray) -> None:
         self.setupTrigger(channel)

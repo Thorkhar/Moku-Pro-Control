@@ -2,9 +2,18 @@ from Waveform import Waveform
 from Moku import Moku
 import config as cfg
 import matplotlib.pyplot as plt
+import atexit
 
 
-def _findCorrespondingMoku(channel: int):
+def exitHandler(devices: dict) -> None:
+    for key, moku in devices.items():
+        try:
+            moku.closeConnection()
+        except:
+            pass
+
+
+def _findCorrespondingMoku(channel: int) -> str:
     if 1 <= channel <= 4:
         return cfg.MOKU_A_NAME
     else:
@@ -21,12 +30,14 @@ def showExampleWave(waveform: Waveform):
     plt.show()
 
 
+devices = {}
+atexit.register(exitHandler, devices)
+
 if __name__ == "__main__":
     # Attempt to establish connection with Moku's
     try:
         devices = {
             cfg.MOKU_A_NAME: Moku(cfg.MOKU_A_IP),  # Channels 1 to 4
-            cfg.MOKU_B_NAME: Moku(cfg.MOKU_B_IP)  # Channels 5 to 8
         }
     except Exception as e:
         print(e)
@@ -35,11 +46,11 @@ if __name__ == "__main__":
 
     # Create waveforms for each channel based on config parameters
     waves = [
-        Waveform(ch, cfg.F_START, cfg.F_STOP, cfg.DELAYS[ch], cfg.REL_RAMP_DURATION, cfg.N_POINTS, cfg.PHASES[ch]) for ch in range(1, 9)
+        Waveform(ch, cfg.F_START, cfg.F_STOP, cfg.DELAYS[ch-1], cfg.REL_RAMP_DURATION, cfg.N_POINTS, cfg.PHASES[ch-1]) for ch in range(1, 9)
     ]
 
     # Upload waveforms and set Moku:Pro's in the good settings
-    for wave in waves:
+    for wave in waves[0:4]:
         devices[_findCorrespondingMoku(wave.channel)].setupChannel(
             wave.channel,
             wave.wave_array
@@ -52,3 +63,4 @@ if __name__ == "__main__":
         device.closeConnection()
 
     print('Finished setting up Moku:Pro devices')
+

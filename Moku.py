@@ -20,7 +20,9 @@ class Moku:
             lut_data=list(waveform),
             frequency=1/cfg.CHIRP_DURATION,
             amplitude=1,
-            interpolation=True
+            interpolation=True,
+            phase=0.0,
+            offset=0.0
         )
 
     def setupTrigger(self, channel: int) -> None:

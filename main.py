@@ -9,8 +9,9 @@ def exitHandler(devices: dict) -> None:
     for key, moku in devices.items():
         try:
             moku.closeConnection()
-        except:
-            pass
+        except Exception as ex:
+            print(ex)
+            print('No existing connection to %s' % key)
 
 
 def _findCorrespondingMoku(channel: int) -> str:

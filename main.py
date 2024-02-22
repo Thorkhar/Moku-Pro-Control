@@ -1,6 +1,7 @@
 from Waveform import Waveform
 from Moku import Moku
 import config as cfg
+import matplotlib.pyplot as plt
 
 
 def _findCorrespondingMoku(channel: int):
@@ -8,6 +9,16 @@ def _findCorrespondingMoku(channel: int):
         return cfg.MOKU_A_NAME
     else:
         return cfg.MOKU_B_NAME
+
+
+def showExampleWave(waveform: Waveform):
+    plt.plot(
+        [t * cfg.CHIRP_DURATION for t in waveform.timepoints],
+        waveform.wave_array
+    )
+    plt.xlabel('Time (s)')
+    plt.ylabel('Amplitude (V)')
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -33,6 +44,8 @@ if __name__ == "__main__":
             wave.channel,
             wave.wave_array
         )
+
+    showExampleWave(waves[0])
 
     # CLose connection with Moku:Pro's
     for name, device in devices.items():

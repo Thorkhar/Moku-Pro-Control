@@ -51,7 +51,7 @@ if __name__ == "__main__":
     ]
 
     # Upload waveforms and set Moku:Pro's in the good settings
-    for wave in waves[0:4]:
+    for wave in waves:
         devices[_findCorrespondingMoku(wave.channel)].setupChannel(
             wave.channel,
             wave.wave_array

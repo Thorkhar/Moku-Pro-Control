@@ -1,6 +1,6 @@
 from moku.instruments import ArbitraryWaveformGenerator
 import numpy as np
-import config as cfg
+from config import settings as cfg
 
 
 class Moku:
@@ -16,9 +16,9 @@ class Moku:
     def uploadWaveform(self, channel: int, waveform: np.ndarray) -> None:
         self.device.generate_waveform(
             channel,
-            sample_rate=cfg.SAMPLE_RATE,
+            sample_rate=cfg['SAMPLE_RATE'],
             lut_data=list(waveform),
-            frequency=1/cfg.CHIRP_DURATION,
+            frequency=1/cfg['CHIRP_DURATION'],
             amplitude=1,
             interpolation=True,
             phase=0.0,

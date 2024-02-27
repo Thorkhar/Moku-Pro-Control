@@ -1,12 +1,12 @@
 from Waveform import Waveform
 from Moku import Moku
-import config as cfg
+from config import settings as cfg
 import matplotlib.pyplot as plt
 import atexit
 
 
-def exitHandler(devices: dict) -> None:
-    for key, moku in devices.items():
+def exitHandler(devices_dict: dict) -> None:
+    for key, moku in devices_dict.items():
         try:
             moku.closeConnection()
         except Exception as ex:
@@ -16,14 +16,14 @@ def exitHandler(devices: dict) -> None:
 
 def _findCorrespondingMoku(channel: int) -> str:
     if 1 <= channel <= 4:
-        return cfg.MOKU_A_NAME
+        return cfg['MOKU_A_NAME']
     else:
-        return cfg.MOKU_B_NAME
+        return cfg['MOKU_B_NAME']
 
 
 def showExampleWave(waveform: Waveform):
     plt.plot(
-        [t * cfg.CHIRP_DURATION for t in waveform.timepoints],
+        [t * cfg['CHIRP_DURATION'] for t in waveform.timepoints],
         waveform.wave_array
     )
     plt.xlabel('Time (s)')
@@ -38,7 +38,7 @@ if __name__ == "__main__":
     # Attempt to establish connection with Moku's
     try:
         devices = {
-            cfg.MOKU_A_NAME: Moku(cfg.MOKU_A_IP),  # Channels 1 to 4
+            cfg['MOKU_A_NAME']: Moku(cfg['MOKU_A_IP']),  # Channels 1 to 4
         }
     except Exception as e:
         print(e)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     # Create waveforms for each channel based on config parameters
     waves = [
-        Waveform(ch, cfg.F_START, cfg.F_STOP, cfg.DELAYS[ch-1], cfg.REL_RAMP_DURATION, cfg.N_POINTS, cfg.PHASES[ch-1]) for ch in range(1, 9)
+        Waveform(ch, cfg['F_START'], cfg['F_STOP'], cfg['DELAYS'][ch-1], cfg['REL_RAMP_DURATION'], cfg['N_POINTS'], cfg['PHASES'][ch-1]) for ch in range(1, 9)
     ]
 
     # Upload waveforms and set Moku:Pro's in the good settings
@@ -64,4 +64,3 @@ if __name__ == "__main__":
         device.closeConnection()
 
     print('Finished setting up Moku:Pro devices')
-

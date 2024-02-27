@@ -19,7 +19,7 @@ class Waveform:
         self.wave_array = self.createWaveArray()
 
     def wave(self, t):
-        return self._rampEnvelope(t) * chirp(t, self.f_start, 1, self.f_stop, phi=self.phase)
+        return self._rampEnvelope(t) * chirp(t, self.f_start, 1, self.f_stop, phi=-self.phase)
 
     def createWaveArray(self):
         return np.array([

@@ -18,6 +18,13 @@ def findCorrespondingMoku(channel: int) -> str:
         return cfg['MOKU_B_NAME']
 
 
+def selectMokuChannel(channel: int) -> int:
+    if 1 <= channel <= 4:
+        return channel
+    else:
+        return channel - 4
+
+
 def showExampleWave(waveform: Waveform):
     plt.plot(
         [t * cfg['CHIRP_DURATION'] for t in waveform.timepoints],

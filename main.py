@@ -31,7 +31,7 @@ def main() -> None:
 
     for wave in waves:
         devices[fncs.findCorrespondingMoku(wave.channel)].setupChannel(
-            wave.channel,
+            fncs.selectMokuChannel(wave.channel),
             wave.wave_array
         )
 

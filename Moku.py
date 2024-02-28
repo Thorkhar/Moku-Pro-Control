@@ -19,7 +19,7 @@ class Moku:
             sample_rate=cfg['SAMPLE_RATE'],
             lut_data=list(waveform),
             frequency=1/cfg['CHIRP_DURATION'],
-            amplitude=1,
+            amplitude=cfg["AMPLITUDE"],
             interpolation=True,
             phase=0.0,
             offset=0.0

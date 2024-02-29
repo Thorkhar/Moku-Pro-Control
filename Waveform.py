@@ -21,10 +21,14 @@ class Waveform:
     def wave(self, t):
         return self._rampEnvelope(t) * chirp(t, self.f_start, 1, self.f_stop, phi=-self.phase)
 
-    def createWaveArray(self):
+    def createWaveArray(self) -> np.ndarray:
         return np.array([
             self.wave(t) for t in self.timepoints
         ])
+
+    def saveWaveAsCSV(self, folder: str) -> None:
+        file_name = f'wave_chirp_{str(self.f_start)}-{(self.f_stop)}_phase-{str(self.phase)}_delay-{str(self.delay)}_rampdur-{self.rel_ramp_duration}.csv'
+        np.savetxt(folder + '\\' + file_name, self.wave_array)
 
     def _rampEnvelope(self, t):
         if t < self.rel_ramp_duration:

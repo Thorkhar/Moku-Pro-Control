@@ -26,7 +26,7 @@ def main() -> None:
         exit()
 
     waves = [
-        Waveform(ch, cfg['F_START'], cfg['F_STOP'], cfg['DELAYS'][ch-1], cfg['REL_RAMP_DURATION'], cfg['N_POINTS'], cfg['PHASES'][ch-1]) for ch in range(1, 9)
+        Waveform(ch, cfg['CHIRP_DURATION'], cfg['F_START'], cfg['F_STOP'], cfg['DELAYS'][ch-1], cfg['REL_RAMP_DURATION'], cfg['N_POINTS'], cfg['PHASES'][ch-1]) for ch in range(1, 9)
     ]
 
     for wave in waves:

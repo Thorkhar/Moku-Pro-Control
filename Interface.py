@@ -19,12 +19,20 @@ class GUI:
 
         row_counter = 0
         for name, value in cfg.items():
-            labels[name] = tk.Label(self.window, text=str(name))
-            entries[name] = tk.Entry(self.window, textvariable=name)
-            entries[name].insert(0, value)
+            if isinstance(value, list):
+                for i in range(len(value)):
+                    labels[name+str(i)] = tk.Label(self.window, text=name+str(i))
+                    entries[name+str(i)] = tk.Entry(self.window, textvariable=name+str(i))
+                    entries[name+str(i)].insert(0, str(value[i]))
 
-            labels[name].grid(row=row_counter, column=0)
-            entries[name].grid(row=row_counter, column=1)
-            row_counter += 1
+                    labels[name+str(i)].grid(row=row_counter, column=0)
+                    entries[name+str(i)].grid(row=row_counter, column=1)
+                    row_counter += 1
+            else:
+                labels[name] = tk.Label(self.window, text=str(name))
+                entries[name] = tk.Entry(self.window, textvariable=name)
+                entries[name].insert(0, value)
 
-        #self.packWidgetDict(labels, entries)
+                labels[name].grid(row=row_counter, column=0)
+                entries[name].grid(row=row_counter, column=1)
+                row_counter += 1

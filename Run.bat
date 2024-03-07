@@ -1,1 +1,1 @@
-python main.py
+python script_only.py

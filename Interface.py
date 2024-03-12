@@ -1,8 +1,12 @@
 import tkinter as tk
 from config import settings as cfg
+from Moku import Moku
+from Waveform import Waveform
 
 class GUI:
-    def __init__(self) -> None:
+    def __init__(self, moku_a: Moku, moku_b: Moku) -> None:
+        self.moku_a = moku_a
+        self.moku_b = moku_b
         self.window = tk.Tk()
 
     def startMainLoop(self) -> None:

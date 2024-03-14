@@ -44,7 +44,9 @@ class Waveform:
         np.savetxt(folder + '\\' + file_name, self.wave_array)
 
     def _rampEnvelope(self, t):
-        if t < self.rel_ramp_duration:
+        if self.rel_ramp_duration == 0:
+            return 1
+        elif t < self.rel_ramp_duration:
             return t / self.rel_ramp_duration
         elif t > 1 - self.rel_ramp_duration:
             return -(t - 1) / self.rel_ramp_duration

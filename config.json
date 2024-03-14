@@ -6,14 +6,14 @@
   "MOKU_A_IP": "[fe80::7269:79ff:feb0:d24]",
   "MOKU_B_IP": "[fe80::7269:79ff:feb0:cec]",
   "CHIRP_DURATION": 0.04,
-  "F_START": 15000,
-  "F_STOP": 3000,
-  "REL_RAMP_DURATION": 0.01,
+  "F_START": 20000,
+  "F_STOP": 1000,
+  "REL_RAMP_DURATION": 0.001,
   "PHASES": [
     0, 0, 0, 0, 0, 0, 0, 0
   ],
   "DELAYS": [
       0, 0, 0, 0, 0, 0, 0, 0
   ],
-  "AMPLITUDE": 1
+  "AMPLITUDE": 5
 }

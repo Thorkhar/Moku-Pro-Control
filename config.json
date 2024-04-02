@@ -8,7 +8,7 @@
   "CHIRP_DURATION": 0.04,
   "F_START": 20000,
   "F_STOP": 1000,
-  "REL_RAMP_DURATION": 0.001,
+  "REL_RAMP_DURATION": 0.01,
   "PHASES": [
     0, 0, 0, 0, 0, 0, 0, 0
   ],
